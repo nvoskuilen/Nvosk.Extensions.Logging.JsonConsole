@@ -1,14 +1,14 @@
 # Nvosk.Extensions.Logging.JsonConsole
 JsonConsole logger provider implementation for Microsoft.Extensions.Logging.
 
-Outputs json formatted logs to console, ideal for centralised logging with EFK stack.
+Outputs json formatted logs to console, ideal for centralised logging in Kubernetes with EFK stack (Elasticsearch/Fluent-Bit/Kibana).
 
 ### Install nuget package
 ```
 PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 1.0.0
 ```
 
-### appsettings.json
+### appsettings.{environment}.json
 ```json
 {
   "Logging": {
