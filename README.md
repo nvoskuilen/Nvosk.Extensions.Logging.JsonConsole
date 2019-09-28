@@ -1,11 +1,11 @@
 # Nvosk.Extensions.Logging.JsonConsole
 JsonConsole logger provider implementation for Microsoft.Extensions.Logging.
 
-Outputs json formatted logs to console, ideal for centralised logging in Kubernetes with EFK stack (Elasticsearch/Fluent-Bit/Kibana).
+Outputs Json formatted logs to stdout/console, ideal for centralised structured logging in Kubernetes with EFK stack (Elasticsearch/Fluent-Bit/Kibana).
 
 ### Install nuget package
 ```
-PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 1.0.0
+PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.0.0
 ```
 
 ### appsettings.{environment}.json
@@ -17,17 +17,20 @@ PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 1.0.0
       "System": "Information",
       "Microsoft": "Information"
     },
-    "JsonConsole": {
-      "IncludeScopes": false,
+    "Console": {
+      "Format": "Json", // Default|Json|Systemd
+      "TimestampFormat": "yyyy-MM-ddTHH:mm:ss",
+      "LogToStandardErrorThreshold": "Warning",
       "LogLevel": {
-        "Default": "Error"
+        "Default": "Information"
       },
-      "MessageTemplate": {
-        "LogLevel": "@level",
-        "Name": "@source",
-        "EventId": "@event_id",
-        "Message": "@message",
-        "Exception": "@exception"
+      "JsonMessageTemplate": {
+        "TimeStamp": "time",
+        "LogLevel": "level",
+        "Source": "source",
+        "EventId": "event_id",
+        "Message": "message",
+        "Exception": "exception"
       }
     }
   }
@@ -45,3 +48,15 @@ PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 1.0.0
         configLogging.AddJsonConsole();
     })
 ```
+
+
+### 3.0.0 Release notes
+- This version is based on Microsoft.Extensions.Logging.Console v3.0.0 and must be removed from your project PackageReference (if any)
+  as all original functionality is also included in Nvosk.Extensions.Logging.JsonConsole v3.0.0. 
+- Via the new "Format" property one can switch between Default, Json or Systemd formats.
+- Replaced Newtonsoft.Json with Microsoft's new high performance System.Text.Json parser.
+- Breaking changes: please review your appsettings.json files as there are some renames and new additions.
+
+
+### 1.0.0 Release notes
+- Initial JsonConsole based on Microsoft.Extensions.Logging.Console v2.2.0

@@ -1,21 +1,23 @@
+// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace Nvosk.Extensions.Logging.JsonConsole.Internal
+namespace Nvosk.Extensions.Logging.JsonConsole
 {
-    public class JsonConsoleLoggerProcessor : IDisposable
+    internal class ConsoleLoggerProcessor : IDisposable
     {
         private const int _maxQueuedMessages = 1024;
 
-        private readonly BlockingCollection<string> _messageQueue = new BlockingCollection<string>(_maxQueuedMessages);
+        private readonly BlockingCollection<LogMessageEntry> _messageQueue = new BlockingCollection<LogMessageEntry>(_maxQueuedMessages);
         private readonly Thread _outputThread;
 
         public IConsole Console;
+        public IConsole ErrorConsole;
 
-        public JsonConsoleLoggerProcessor()
+        public ConsoleLoggerProcessor()
         {
             // Start Console message queue processor
             _outputThread = new Thread(ProcessLogQueue)
@@ -26,7 +28,7 @@ namespace Nvosk.Extensions.Logging.JsonConsole.Internal
             _outputThread.Start();
         }
 
-        public virtual void EnqueueMessage(string message)
+        public virtual void EnqueueMessage(LogMessageEntry message)
         {
             if (!_messageQueue.IsAddingCompleted)
             {
@@ -39,13 +41,30 @@ namespace Nvosk.Extensions.Logging.JsonConsole.Internal
             }
 
             // Adding is completed so just log the message
-            WriteMessage(message);
+            try
+            {
+                WriteMessage(message);
+            }
+            catch (Exception) { }
         }
 
-        // for testing > ?
-        internal virtual void WriteMessage(string message)
+        // for testing
+        internal virtual void WriteMessage(LogMessageEntry message)
         {
-            Console.Write(message);
+            var console = message.LogAsError ? ErrorConsole : Console;
+
+            if (message.TimeStamp != null)
+            {
+                console.Write(message.TimeStamp, message.MessageColor, message.MessageColor);
+            }
+
+            if (message.LevelString != null)
+            {
+                console.Write(message.LevelString, message.LevelBackground, message.LevelForeground);
+            }
+
+            console.Write(message.Message, message.MessageColor, message.MessageColor);
+            console.Flush();
         }
 
         private void ProcessLogQueue()

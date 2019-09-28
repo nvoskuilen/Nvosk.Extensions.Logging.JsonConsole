@@ -1,9 +1,9 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nvosk.Extensions.Logging.JsonConsole", "Nvosk.Extensions.Logging.JsonConsole\Nvosk.Extensions.Logging.JsonConsole.csproj", "{D1EA377A-6B20-4121-B500-410CA0DC533D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nvosk.Extensions.Logging.JsonConsole", "Logging.Console\src\Nvosk.Extensions.Logging.JsonConsole.csproj", "{9C3E03A2-52C1-4152-914E-3F1153A34E23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D1EA377A-6B20-4121-B500-410CA0DC533D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1EA377A-6B20-4121-B500-410CA0DC533D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1EA377A-6B20-4121-B500-410CA0DC533D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1EA377A-6B20-4121-B500-410CA0DC533D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C3E03A2-52C1-4152-914E-3F1153A34E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C3E03A2-52C1-4152-914E-3F1153A34E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C3E03A2-52C1-4152-914E-3F1153A34E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C3E03A2-52C1-4152-914E-3F1153A34E23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E38DCFDE-0804-44BC-9AA2-2B9F4D482A92}
+		SolutionGuid = {2F2BF952-FBFE-4608-9892-00523599A832}
 	EndGlobalSection
 EndGlobal
