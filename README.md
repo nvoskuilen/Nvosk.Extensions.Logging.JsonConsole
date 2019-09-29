@@ -8,7 +8,7 @@ Outputs json formatted logs to stdout/console, ideal for high performance centra
 PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.0.0
 ```
 
-### Add the "Console" section to appsettings.{environment}.json
+### Add the "Console" section in appsettings.{environment}.json
 ```javascript
 {
   "Logging": {
@@ -37,7 +37,7 @@ PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.0.0
 }
 ```
 
-### Add the "ConfigureLogging" section Program.cs
+### Add the "ConfigureLogging" section in Program.cs
 ```c#
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
