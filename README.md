@@ -1,15 +1,15 @@
 # Nvosk.Extensions.Logging.JsonConsole
 JsonConsole logger provider implementation for Microsoft.Extensions.Logging.
 
-Outputs Json formatted logs to stdout/console, ideal for centralised structured logging in Kubernetes with EFK stack (Elasticsearch/Fluent-Bit/Kibana).
+Outputs json formatted logs to stdout/console, ideal for high performance centralised structured logging in Kubernetes with EFK stack (Elasticsearch/Fluent-Bit/Kibana).
 
 ### Install nuget package
 ```
 PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.0.0
 ```
 
-### appsettings.{environment}.json
-```json
+### Add the "Console" section to appsettings.{environment}.json
+```javascript
 {
   "Logging": {
     "LogLevel": {
@@ -18,7 +18,7 @@ PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.0.0
       "Microsoft": "Information"
     },
     "Console": {
-      "Format": "Json", // Default|Json|Systemd
+      "Format": "Json",
       "TimestampFormat": "yyyy-MM-ddTHH:mm:ss",
       "LogToStandardErrorThreshold": "Warning",
       "LogLevel": {
@@ -37,26 +37,41 @@ PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.0.0
 }
 ```
 
-### Program.cs
+### Add the "ConfigureLogging" section Program.cs
 ```c#
-    .ConfigureLogging((hostContext, configLogging) =>
-    {
-        // clear all previously registered providers
-        configLogging.ClearProviders();
-        configLogging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
-    
-        configLogging.AddJsonConsole();
-    })
+    public static IHostBuilder CreateHostBuilder(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            })
+            .ConfigureLogging((hostContext, configLogging) =>
+            {
+                // clear all previously registered providers
+                configLogging.ClearProviders();
+
+                configLogging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
+                configLogging.AddJsonConsole();
+            });
 ```
 
+### Example json output
+```javascript
+{"time":"2019-12-31T23:59:54","level":"trce","source":"ConsoleApp.Program","event_id":0,"message":"LogTrace..."}
+{"time":"2019-12-31T23:59:55","level":"dbug","source":"ConsoleApp.Program","event_id":0,"message":"LogDebug..."}
+{"time":"2019-12-31T23:59:56","level":"info","source":"ConsoleApp.Program","event_id":0,"message":"LogInformation..."}
+{"time":"2019-12-31T23:59:57","level":"warn","source":"ConsoleApp.Program","event_id":0,"message":"LogWarning..."}
+{"time":"2019-12-31T23:59:58","level":"fail","source":"ConsoleApp.Program","event_id":0,"message":"LogError..."}
+{"time":"2019-12-31T23:59:59","level":"crit","source":"ConsoleApp.Program","event_id":0,"message":"LogCritical..."}
+```
 
 ### 3.0.0 Release notes
-- This version is based on Microsoft.Extensions.Logging.Console v3.0.0 and must be removed from your project PackageReference (if any)
-  as all original functionality is also included in Nvosk.Extensions.Logging.JsonConsole v3.0.0. 
+- Based on Microsoft.Extensions.Logging.Console v3.0.0.
+- All original functionality from Microsoft.Extensions.Logging.Console is included.
 - Via the new "Format" property one can switch between Default, Json or Systemd formats.
-- Replaced Newtonsoft.Json with Microsoft's new high performance System.Text.Json parser.
+- Replaced Newtonsoft.Json with Microsoft's new high performance System.Text.Json.Utf8JsonWriter.
 - Breaking changes: please review your appsettings.json files as there are some renames and new additions.
 
-
 ### 1.0.0 Release notes
-- Initial JsonConsole based on Microsoft.Extensions.Logging.Console v2.2.0
+- Based on Microsoft.Extensions.Logging.Console v2.2.0.
+- Initial JsonConsole.
