@@ -5,16 +5,6 @@
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <Version>3.0.0</Version>
-    <Authors>N. Voskuilen</Authors>
-    <PackageTags>json console terminal stdout structured logging</PackageTags>
-    <PackageReleaseNotes>Please visit source repository.</PackageReleaseNotes>
-    <RepositoryUrl>https://github.com/nvoskuilen/Nvosk.Extensions.Logging.JsonConsole</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/nvoskuilen/Nvosk.Extensions.Logging.JsonConsole</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Company>N. Voskuilen</Company>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,13 +16,6 @@
   
   <ItemGroup>
     <Compile Include="../../shared/*.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="..\..\LICENSE.txt">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
   
 </Project>
