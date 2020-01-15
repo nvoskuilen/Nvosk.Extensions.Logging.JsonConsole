@@ -7,7 +7,7 @@ Ideal for high performance centralised structured logging in environments such a
 
 ### Install nuget package
 ```
-PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.1.0
+PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.1.1
 ```
 
 ### Add the "Console" section in appsettings.{environment}.json
@@ -16,9 +16,9 @@ The "JsonMessageTemplate" section is optional.
 {
   "Logging": {
     "LogLevel": {
-      "Default": "Error",
-      "System": "Information",
-      "Microsoft": "Information"
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
     },
     "Console": {
       "Format": "Json",
@@ -42,20 +42,20 @@ The "JsonMessageTemplate" section is optional.
 
 ### Add the "ConfigureLogging" section in Program.cs
 ```c#
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            })
-            .ConfigureLogging((hostContext, configLogging) =>
-            {
-                // clear all previously registered providers
-                configLogging.ClearProviders();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.ConfigureLogging((hostContext, configLogging) =>
+                    {
+                        // clear all previously registered providers
+                        configLogging.ClearProviders();
 
-                configLogging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
-                configLogging.AddJsonConsole();
-            });
+                        configLogging.AddConfiguration(hostContext.Configuration.GetSection("Logging"));
+                        configLogging.AddJsonConsole();
+                    })
+                   .UseStartup<Startup>();
+                });
 ```
 
 ### Example json output
@@ -67,6 +67,10 @@ The "JsonMessageTemplate" section is optional.
 {"time":"2019-12-31T23:59:58","level":"fail","source":"ConsoleApp.Program","event_id":0,"message":"LogError..."}
 {"time":"2019-12-31T23:59:59","level":"crit","source":"ConsoleApp.Program","event_id":0,"message":"LogCritical..."}
 ```
+
+### 3.1.1 Release notes
+- Maintenance release
+- Updated Microsoft.Extensions.* packages to v3.1.1
 
 ### 3.1.0 Release notes
 - Maintenance release
