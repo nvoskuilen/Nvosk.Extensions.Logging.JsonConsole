@@ -7,7 +7,7 @@ Ideal for high performance centralised structured logging in environments such a
 
 ### Install nuget package
 ```
-PM> Install-Package Nvosk.Extensions.Logging.JsonConsole -Version 3.1.1
+PM> Install-Package Nvosk.Extensions.Logging.JsonConsole
 ```
 
 ### Add the "Console" section in appsettings.{environment}.json
