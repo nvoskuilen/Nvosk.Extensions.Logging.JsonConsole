@@ -68,6 +68,10 @@ The "JsonMessageTemplate" section is optional.
 {"time":"2019-12-31T23:59:59","level":"crit","source":"ConsoleApp.Program","event_id":0,"message":"LogCritical..."}
 ```
 
+### 3.1.17 Release notes
+- Updated Microsoft.Extensions.* packages to v3.1.17
+- Updated System.Text.Json to v5.0.2
+
 ### 3.1.13 Release notes
 - Updated Microsoft.Extensions.* packages to v3.1.13
 
